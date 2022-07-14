@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{> head}}
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+</head>
+
+<body id="backend">
+    <h1>{{ titulo }}</h1>
+    <div class="container mb-4">
+        
+        {{> nav}}
+
+        <div class="table-responsive mt-4">
+            
+            <table class="table caption-top">
+                <caption>Lista de productos</caption>
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">#ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Imagen</th>
+                        <th scope="col" style="max-width: 30%">Descripcion</th>
+                        <th scope="col" style="max-width: 10%">Características</th>
+                        <th scope="col" style="max-width: 5%">Precio ($)</th>
+                        <th scope="col" style="max-width: 5%">Acciones</th>
+                    </tr>
+                </thead>
+                
+                <tbody id="admin-productos">
+                {{#if data}}
+                    {{#each data}}
+                    <tr>
+                        <th scope="row">{{id}}</th>
+                        <td>{{nombre}}</td>
+                        <td><img src="../../uploads/{{imagen}}" alt="imagen de {{nombre}}"></td>
+                        <td class="descripcion"><div>{{descripcion}}</div></td>
+                        <td class="caracteristicas">
+
+                                {{#list caracteristicas}}
+                                <li>{{this}}</li>
+                                {{/list}}
+                   
+                        </td>
+                        <td>{{dolarApeso precio }} </td>
+                        <td>
+                            <a href="../editar/{{id}}">Editar </a><br>
+                            <a href="../borrar/{{id}}">Borrar</a></td>
+                    </tr>
+                    {{/each}}
+                    
+                {{/if}}   
+                </tbody>
+                 
+            </table>
+            <a href="/agregar" class="btn btn-info">Agregar producto</a>
+            
+        </div>
+
+    </div><!-- /container -->
+
+{{> footer}}
+
+<script type="module">
+    const dataTable = new simpleDatatables.DataTable(".table", {
+            labels: {
+                info: "Mostrando {start} a {end} de {rows} productos",
+                placeholder: "Buscar...",
+                perPage: "{select} productos por página",
+                noRows: "No hay productos cargados"
+            }
+})
+console.log(dataTable)
+</script>
+
+</body>
+
+</html>
